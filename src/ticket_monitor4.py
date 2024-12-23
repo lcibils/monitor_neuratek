@@ -158,34 +158,71 @@ def apply_color_to_html(df):
     return html_table
 
 if __name__ == "__main__":
-    parameters_file = os.getenv('MONITOR_REDMINE', 'parameters.ini')
-    cfg = read_parameters(parameters_file)
-    date_fmt = cfg['misc']['date_format']
-    sla = SLA(cfg['sla']['file'], date_fmt)
+    if 'initialized' not in st.session_state:
+        parameters_file = os.getenv('MONITOR_REDMINE', 'parameters.ini')
+        cfg = read_parameters(parameters_file)
+        st.set_page_config(layout=cfg['misc']['screen_layout'])
+        date_fmt = cfg['misc']['date_format']
+        sla = SLA(cfg['sla']['file'], date_fmt)
 
-    style_table = sla.style_table
-    style_category = sla.style_category
-    style_sla = sla.style_sla    
-    style_status = sla.style_status
-    style_customer = sla.style_customer  
+        st.session_state.style_table = sla.style_table
+        st.session_state.style_category = sla.style_category
+        st.session_state.style_sla = sla.style_sla    
+        st.session_state.style_status = sla.style_status
+        st.session_state.style_customer = sla.style_customer  
 
-    redmine = Redmine(cfg['Redmine']['url'], key=cfg['Redmine']['key'])
+        st.session_state.redmine = Redmine(cfg['Redmine']['url'], key=cfg['Redmine']['key'])
+        st.session_state.id_fecha_estimada = get_fecha_estimada_id('Fecha estimada', 
+                                                                   st.session_state.redmine)
 
-    id_fecha_estimada = get_fecha_estimada_id('Fecha estimada')
+        st.session_state.cfg = cfg
+        st.session_state.date_fmt = date_fmt
+        st.session_state.sla = sla
 
-    st.set_page_config(layout=cfg['misc']['screen_layout'])
-    st.title(cfg['misc']['title'])
+        st.session_state.initialized = True
+
+    cfg = st.session_state.cfg
+    date_fmt = st.session_state.date_fmt
+    sla = st.session_state.sla
+    style_table = st.session_state.style_table
+    style_category = st.session_state.style_category
+    style_sla = st.session_state.style_sla    
+    style_status = st.session_state.style_status
+    style_customer = st.session_state.style_customer  
+    redmine = st.session_state.redmine
+    id_fecha_estimada = st.session_state.id_fecha_estimada
+
+    # parameters_file = os.getenv('MONITOR_REDMINE', 'parameters.ini')
+    # cfg = read_parameters(parameters_file)
+    # date_fmt = cfg['misc']['date_format']
+    # sla = SLA(cfg['sla']['file'], date_fmt)
+
+    # style_table = sla.style_table
+    # style_category = sla.style_category
+    # style_sla = sla.style_sla
+    # style_status = sla.style_status
+    # style_customer = sla.style_customer  
+
+    # redmine = Redmine(cfg['Redmine']['url'], key=cfg['Redmine']['key'])
+
+    # id_fecha_estimada = get_fecha_estimada_id('Fecha estimada', redmine)
 
     query = redmine.issue.filter(project_id=cfg['Redmine']['project_id'], status_id=cfg['Redmine']['issues'])
     now = datetime.now()
+
+    # st.set_page_config(layout=cfg['misc']['screen_layout'])
+    st.title(cfg['misc']['title'])
     st.subheader(f'{now.strftime(date_fmt)} - total tickets: {len(query)}')
+
     df = load_issues(query, get_status_id('En curso'), get_status_id('Resuelta'))
 
     # Convert the DataFrame to a styled HTML table
     html_table = apply_color_to_html(df)
 
     # Display the table using st.markdown
-    st.markdown(html_table, unsafe_allow_html=True)
+    table_placeholder = st.empty()
+    table_placeholder.markdown(html_table, unsafe_allow_html=True)
+    # st.markdown(html_table, unsafe_allow_html=True)
 
     time.sleep(int(cfg['misc']['loop_time']))
     st.rerun()

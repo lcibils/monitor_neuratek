@@ -1,0 +1,19 @@
+services:
+  streamlit-app:
+    image: python:3.9-slim
+    container_name: monitor_redmine
+    working_dir: /app
+    volumes:
+      - ./src:/app  # Mount the source code from the host to the container
+      - ./config:/app/config  # Mount configuration/parameters files
+    ports:
+      - "8501:8501"  # Expose Streamlit's default port
+    command: >
+      sh -c "
+      pip install --no-cache-dir -r requirements.txt &&
+      streamlit run app.py
+      "
+    environment:
+      STREAMLIT_SERVER_PORT: 8501
+      MONITOR_REDMINE: /app/config/parameters.ini
+

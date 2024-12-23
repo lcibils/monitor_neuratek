@@ -1,0 +1,6 @@
+streamlit
+pandas
+holidays
+configparser
+python-redmine
+icecream

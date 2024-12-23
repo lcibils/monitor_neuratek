@@ -1,0 +1,99 @@
+{
+    "general": {
+        "table_style": {
+            "general": "width: 100%; border-collapse: collapse;",
+            "header": "background-color: #007acc; color: white; padding: 8px;",
+            "cell": "padding: 8px;"
+        },
+        "categories": [{
+            "name": "Mejora o Consulta",
+            "style": "background-color: white; color: green;"
+        },
+        {
+            "name": "Incidente Menor",
+            "style":  "background-color: white; color: blue;"
+        },
+        {
+            "name": "Incidente Mayor",
+            "style": "background-color: white; color: orange;"
+        },
+        {
+            "name": "Incidente Crítico",
+            "style": "background-color: white; color: red;"
+        }],
+        
+        "sla_style": {
+            "alert": "background-color: red; color: white;",
+            "warning": "background-color: yellow; color: black;",
+            "ok": "background-color: green; color: white;",
+            "none": "background-color: white;"
+        },
+        "status_style": {
+            "Nueva": "background-color: red; color: white;",
+            "En curso": "background-color: white; color: red;",
+            "Desarrollo": "background-color: white; color: red;",
+            "Cliente": "",
+            "Resuelta": ""
+        }
+    },
+    "customers": [{
+        "name": "Empresa A",
+        "style": "background-color: yellow; color: black;",
+        "service_mode": "full",
+        "sla": {
+            "Mejora o Consulta": {
+                "t_resp_inic": 48,
+                "t_resp_est": 1000
+            },
+            "Incidente Menor": {
+                "t_resp_inic": 24,
+                "t_resp_est": 72
+            },
+            "Incidente Mayor": {
+                "t_resp_inic": 4,
+                "t_resp_est": 8
+            },
+            "Incidente Crítico": {
+                "t_resp_inic": 1,
+                "t_resp_est": 4
+            }
+        }
+        },
+        {
+        "name": "Empresa B",
+        "service_mode": "partial",
+        "business_hours": {
+            "start": "09:00",
+            "end": "17:00",
+            "week_mask": "Mon Tue Wed Thu Fri"
+        },
+        "custom_holidays": [
+            "2024-12-24",
+            "2024-12-31",
+            "2024-12-26"
+        ],
+        "sla": {
+            "Mejora o Consulta": {
+                "t_resp_inic": 48,
+                "t_resp_est": 1000
+            },
+            "Incidente Menor": {
+                "t_resp_inic": 24,
+                "t_resp_est": 72
+            },
+            "Incidente Mayor": {
+                "t_resp_inic": 4,
+                "t_resp_est": 8
+            },
+            "Incidente Crítico": {
+                "t_resp_inic": 1,
+                "t_resp_est": 4
+            }
+        }
+        },
+        {        
+        "name": "Neuratek",
+        "service_mode": "None"
+        }
+    ]
+}

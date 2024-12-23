@@ -192,21 +192,6 @@ if __name__ == "__main__":
     redmine = st.session_state.redmine
     id_fecha_estimada = st.session_state.id_fecha_estimada
 
-    # parameters_file = os.getenv('MONITOR_REDMINE', 'parameters.ini')
-    # cfg = read_parameters(parameters_file)
-    # date_fmt = cfg['misc']['date_format']
-    # sla = SLA(cfg['sla']['file'], date_fmt)
-
-    # style_table = sla.style_table
-    # style_category = sla.style_category
-    # style_sla = sla.style_sla
-    # style_status = sla.style_status
-    # style_customer = sla.style_customer  
-
-    # redmine = Redmine(cfg['Redmine']['url'], key=cfg['Redmine']['key'])
-
-    # id_fecha_estimada = get_fecha_estimada_id('Fecha estimada', redmine)
-
     query = redmine.issue.filter(project_id=cfg['Redmine']['project_id'], status_id=cfg['Redmine']['issues'])
     now = datetime.now()
 

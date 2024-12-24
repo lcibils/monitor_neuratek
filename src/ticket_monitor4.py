@@ -157,6 +157,8 @@ def apply_color_to_html(df):
 
     return html_table
 
+    hola
+
 if __name__ == "__main__":
     if 'initialized' not in st.session_state:
         parameters_file = os.getenv('MONITOR_REDMINE', 'parameters.ini')

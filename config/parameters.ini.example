@@ -1,0 +1,14 @@
+    [Redmine]
+    url = http://xxx.xxx.xxx.xxx:yyyy
+    key = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    project_id = idproject
+    issues=open
+
+    [sla]
+    file = path/of/sla/file
+
+    [misc]
+    screen_layout = wide
+    loop_time = 10
+    date_format = %%Y-%%m-%%d %%I:%%M
+    title = Monitor de tickets

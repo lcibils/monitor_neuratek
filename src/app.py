@@ -207,5 +207,6 @@ if __name__ == "__main__":
     table_placeholder = st.empty()
     table_placeholder.markdown(html_table, unsafe_allow_html=True)
 
+    # este es un cambio para ver cómo se ve la versión 2
     time.sleep(int(cfg['misc']['loop_time']))
     st.rerun()

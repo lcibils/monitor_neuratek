@@ -6,13 +6,17 @@ import configparser
 import streamlit as st
 from redminelib import Redmine
 
-# from icecream import ic
+from icecream import ic
 from  sla_class import SLA
 
 def read_parameters(file_path):
     config = configparser.ConfigParser()
     config.read(file_path)
     return config
+
+def get_fecha_estimada_id(name, redmine):
+    fields = redmine.custom_field.all()
+    return [f['id'] for f in fields if f['name'] == name][0]
 
 def get_client(id):
     user = redmine.user.get(id)
@@ -22,10 +26,6 @@ def get_client(id):
     except:
         client = ""
     return client
-
-def get_fecha_estimada_id(name):
-    fields = redmine.custom_field.all()
-    return [f['id'] for f in fields if f['name'] == name][0]
 
 def get_fecha_prevista(issue):
     fields = issue.custom_fields
@@ -195,7 +195,6 @@ if __name__ == "__main__":
     query = redmine.issue.filter(project_id=cfg['Redmine']['project_id'], status_id=cfg['Redmine']['issues'])
     now = datetime.now()
 
-    # st.set_page_config(layout=cfg['misc']['screen_layout'])
     st.title(cfg['misc']['title'])
     st.subheader(f'{now.strftime(date_fmt)} - total tickets: {len(query)}')
 
@@ -207,8 +206,6 @@ if __name__ == "__main__":
     # Display the table using st.markdown
     table_placeholder = st.empty()
     table_placeholder.markdown(html_table, unsafe_allow_html=True)
-    # st.markdown(html_table, unsafe_allow_html=True)
 
-    # tiempo de espera para refrescar la página
     time.sleep(int(cfg['misc']['loop_time']))
     st.rerun()

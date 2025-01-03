@@ -209,5 +209,6 @@ if __name__ == "__main__":
     table_placeholder.markdown(html_table, unsafe_allow_html=True)
     # st.markdown(html_table, unsafe_allow_html=True)
 
+    # tiempo de espera para refrescar la página
     time.sleep(int(cfg['misc']['loop_time']))
     st.rerun()
